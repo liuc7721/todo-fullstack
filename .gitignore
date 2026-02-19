@@ -1,0 +1,43 @@
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Build outputs
+dist/
+build/
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Prisma
+prisma/migrations/*.sql
+!prisma/migrations/**/migration.sql
+
+# Cursor
+.cursor/
+*.backup
+
+# Temporary files
+*.tmp
+temp/
+tmp/
+
+# Screenshots (if any)
+screenshots/

@@ -1,6 +1,8 @@
 import cors from 'cors';
 
+const allowedOrigin = process.env.FRONTEND_URL || 'http://localhost:5173';
+
 export const corsMiddleware = cors({
-  origin: 'http://localhost:5173', // Vite 預設 port
+  origin: allowedOrigin, // Vite 預設 port
   credentials: true
 });

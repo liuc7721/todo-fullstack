@@ -4,7 +4,7 @@ import prisma from './db/prisma.js';
 import todosRouter from './routes/todos.js';
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(corsMiddleware);
 app.use(express.json());

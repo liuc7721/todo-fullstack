@@ -65,9 +65,12 @@ async function handleAddTodo() {
 
   try {
     showLoading();
-    await createTodo(title);
+    const response = await createTodo(title);
     todoInput.value = '';
-    await loadTodos(); // 重新載入列表
+    
+    // 直接將新 todo 加入本地陣列並重新渲染，不需要重新載入整個列表
+    todos.unshift(response.data); // unshift 加到最前面（最新的在最上面）
+    renderTodoList(todos, handleToggleTodo, handleDeleteTodo);
   } catch (error) {
     showError(error.message);
   } finally {
@@ -80,8 +83,14 @@ async function handleAddTodo() {
  */
 async function handleToggleTodo(id, completed) {
   try {
-    await updateTodo(id, { completed });
-    await loadTodos(); // 重新載入列表
+    const response = await updateTodo(id, { completed });
+    
+    // 直接更新本地陣列中的 todo 並重新渲染，不需要重新載入整個列表
+    const index = todos.findIndex(todo => todo.id === id);
+    if (index !== -1) {
+      todos[index] = response.data;
+      renderTodoList(todos, handleToggleTodo, handleDeleteTodo);
+    }
   } catch (error) {
     showError(error.message);
   }
@@ -98,7 +107,10 @@ async function handleDeleteTodo(id) {
   try {
     showLoading();
     await deleteTodo(id);
-    await loadTodos(); // 重新載入列表
+    
+    // 直接從本地陣列移除並重新渲染，不需要重新載入整個列表
+    todos = todos.filter(todo => todo.id !== id);
+    renderTodoList(todos, handleToggleTodo, handleDeleteTodo);
   } catch (error) {
     showError(error.message);
   } finally {
